@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Simulated data
+*.trees
+*.vcf.gz
+*.vcf.csi
+*.bcf
