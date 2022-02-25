@@ -16,7 +16,7 @@ import numcodecs
     "--sequence-length",
     type=int,
     default=100,
-    help="The length of the simulated chromosome in megabases",
+    help="The length of the simulated chromosome in kilobases",
 )
 @click.option("-p", "--power", is_flag=True, help="Sample size value is 10^n")
 def generate_trees(sample_size, outfile, sequence_length, power):
@@ -24,14 +24,14 @@ def generate_trees(sample_size, outfile, sequence_length, power):
     Simulates the trees and mutations for the specified diploid sample size.
     """
     if power:
-        sample_size = 10**sample_size
+        sample_size = sample_size
     # Using very basic human-like model here. We can add more elaborate
     # models, using stdpopsim.
     ts = msprime.sim_ancestry(
         sample_size,
         population_size=10_000,
         recombination_rate=1e-8,
-        sequence_length=sequence_length * 10 ** 6,
+        sequence_length=sequence_length * 10 ** 3,
         random_seed=42,
     )
     ts = msprime.sim_mutations(ts, rate=1e-8)
