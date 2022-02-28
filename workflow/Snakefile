@@ -1,0 +1,24 @@
+SAMPLES = [10]
+LENGTHS = [1]
+
+rule all:
+    input:
+        expand("results/simulations/ga4gh_sim_l{length}_s{samples}.vcf.gz", samples=SAMPLES, length=LENGTHS),
+
+rule simulate:
+    output:
+        "results/simulations/ga4gh_sim_l{length}_s{samples}.trees"
+    conda:
+        "envs/simulator_bug.yaml"
+    shell:
+        "python3 ./simulator.py generate-trees -L {wildcards.length} -p {wildcards.samples} {output}"
+
+rule make_vcf:
+    input:
+        "results/simulations/ga4gh_sim_l{length}_s{samples}.trees"
+    output:
+        "results/simulations/ga4gh_sim_l{length}_s{samples}.vcf.gz"
+    conda:
+        "envs/simulator_bug.yaml"
+    shell:
+        "python3 ./simulator.py trees-to-vcf {input} - | gzip -c > {output}"

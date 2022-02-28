@@ -1,0 +1,14 @@
+name: simulator
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3.9
+  - pip:
+    - click==8.0.4
+    - msprime>=1.0
+    - numcodecs
+    - git+https://github.com/pystatgen/sgkit.git#egg=sgkit
+    - tskit
+    - tsinfer
